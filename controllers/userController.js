@@ -15,7 +15,7 @@ const userController = {
         try {
             const { username, email, password, confirmPassword } = req.body
 
-            // No.1 - Check duplicate email
+            // No.1-1 - Check duplicate email
             const checkMail = await Users.findOne({ email })
             if (checkMail) {
                 return res.status(400).json(
@@ -26,13 +26,34 @@ const userController = {
                 )
             }
 
-            // No.2 - Check duplicate username
+            // No.1-2 - Check format email
+            if (email.indexOf('@') === -1) {
+                return res.status(400).json(
+                    {
+                        'msg': 'Failure',
+                        'data': config['W-0006']
+                    }
+                )
+            }
+
+            // No.2-1 - Check duplicate username
             const checkUserName = await Users.findOne({ username })
             if (checkUserName) {
                 return res.status(400).json(
                     {
                         'msg': 'Failure',
                         'data': config['W-0002']
+                    }
+                )
+            }
+
+            // No.2-2 - Check username has specific character(included '@' character)
+            pattern = new RegExp(/[~`!#$%\^&@*+=\-\[\]\\';,/{}|\\":<>\?]/)
+            if (pattern.test(username)) {
+                return res.status(400).json(
+                    {
+                        'msg': 'Failure',
+                        'data': config['W-0005']
                     }
                 )
             }
@@ -64,10 +85,11 @@ const userController = {
             const newUser = new Users({
                 username, email, password: pwdHash
             })
-            console.log(typeof(newUser.password))
+
             // No.6 - Save new user to mongodb
-            await newUser.save()
+            // await newUser.save()
             console.log('+[Create][Client][User] ID:', newUser._id.toString(), 'at', new Date())
+
             return res.status(200).json(
                 {
                     'msg': 'Success',
@@ -85,6 +107,17 @@ const userController = {
                 }
             )
         }
+    },
+
+    /*
+    *   Func: Login user client
+    *   Method: POST
+    *   Params:
+    *   obj: { username, password, confirmPassword, email }
+    *   return: JSON { msg: string }
+    */
+    login: async (req, res) => {
+
     }
 }
 
