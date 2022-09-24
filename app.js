@@ -27,7 +27,7 @@ mongoose.connect(URI, {
     useUnifiedTopology: true
 }, err => {
     if (err) throw err
-    console.log('Connected to MongoDB')
+    console.log('Connected to MongoDB at', new Date())
 })
 
 // if haven't PORT in environment => PORT is 5000

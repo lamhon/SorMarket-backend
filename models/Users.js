@@ -21,6 +21,10 @@ const userSchema = new Schema({
     cart: {
         type: Array,
         default: []
+    },
+    verify: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
