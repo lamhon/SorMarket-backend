@@ -110,12 +110,12 @@ const userController = {
     },
 
     /*
-    *   Func: Login user client
-    *   Method: POST
-    *   Params:
-    *   obj: { username, password, confirmPassword, email }
-    *   return: JSON { msg: string }
-    */
+     *   Func: Login user client
+     *   Method: POST
+     *   Params:
+     *   obj: { username, password, confirmPassword, email }
+     *   return: JSON { msg: string }
+     */
     login: async (req, res) => {
         try {
             const { loginInfo, password, loginType } = req.body
@@ -195,6 +195,35 @@ const userController = {
             } else {
                 // Login with username
             }
+        } catch (err) {
+            return res.status(500).json(
+                {
+                    'msg': 'Failure',
+                    'data': err.message
+                }
+            )
+        }
+    },
+
+    /*
+     *  Func: Logout user client
+     *  Method: POST
+     *  Params:
+     *  Obj:
+     *  Return: JSON { msg: String }
+     */
+    logout: async (req, res) => {
+        try {
+            const { id } = req.body
+            res.clearCookie('refreshtoken', { path: '/user/refresh_token' })
+
+            console.log('[#][Logout][Client][User] ID:', id.toString(), 'at', new Date())
+            return res.json(
+                {
+                    'msg': 'Success',
+                    'data': 'Logged out'
+                }
+            )
         } catch (err) {
             return res.status(500).json(
                 {
