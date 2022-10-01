@@ -13,7 +13,6 @@ const auth = (req, res, next) => {
                 }
             )
         }
-
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) {
                 return res.status(400).json(
