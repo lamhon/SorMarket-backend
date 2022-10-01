@@ -6,6 +6,7 @@ const Config = {
     "W-0005": "Username can not contain specific character",
     "W-0006": "Format of email address is not supported",
     "W-0007": "Process have something wrong",
+    "W-0008": "Invalid Authentication",
 
     "E-0001": "Please login first",
     "E-0002": "This user does not exist",
